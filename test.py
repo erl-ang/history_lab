@@ -59,7 +59,7 @@ def main():
 				# cols[0].markdown(page)
 				st.markdown(display_pdf(uploaded_file), unsafe_allow_html=True)
 				image_url = get_uploaded_image_url(uploaded_file)
-				st.markdown(f'<iframe src="https://drive.google.com/viewerng/viewer?embedded=true&url={image_url}" width="100%" height="1100">', unsafe_allow_html=True)
+				# st.markdown(f'<iframe src="https://drive.google.com/viewerng/viewer?embedded=true&url={image_url}" width="100%" height="1100">', unsafe_allow_html=True)
 
 			# attempt to extract text
 			with st.container():
@@ -78,13 +78,14 @@ def main():
 
 def display_pdf(file):
 	base64_pdf = base64.b64encode(file.read()).decode('utf-8')
-	pdf_display = f'<embed src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf">' 
+	pdf_display = f'<embed src="data:application/pdf;base64,{base64_pdf}" width="700" height="1100" type="application/pdf">' 
+	# parameterize 
 	return pdf_display
 
-def get_uploaded_image_url(file):
+def get_uploaded_image_embed(file):
 	base64_pdf = base64.b64encode(file.read()).decode('utf-8')
-	image_url = f'<embed src="data:application/pdf;base64,{base64_pdf}"'
-	return image_url
+	image_embed = f'<embed src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf">'
+	return image_embed
 
 if __name__ == '__main__':
     main()
