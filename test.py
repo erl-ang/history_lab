@@ -49,32 +49,27 @@ def main():
 			page = pdf_reader.getPage(page_idx)
 
 			with st.container():
-				"""
-				trying to use pdf2image to display an uploaded pdf as an image instead
-				"""
+				
+				# trying to use pdf2image to display an uploaded pdf as an image instead
+				
 				# pdf_image = convert_from_bytes(uploaded_file.read())
-				"""
-				trying to use pdf2image to display a local pdf as an image
-				"""
+
+				# trying to use pdf2image to display a local pdf as an image
+
 				# pdf_image = convert_from_path("~/Downloads/Liang_Erin_Resume.pdf")
 
-				"""
-				maybe use Doctr library?
-				"""
+				# maybe use Doctr library?
 				# pdf_image = DocumentFile.from_pdf(uploaded_file.read()).as_images()
 
 				# display as an image
 				# cols[0].image(pdf_image[page_idx])
 
-				"""
-				Displaying markdown instead
-				"""
+				# Displaying markdown instead
 				# pdf_html = get_pdf_html_embed(uploaded_file)
 				pdf_html =  get_pdf_html_iframe(uploaded_file)
 
 				
 				cols[0].markdown(pdf_html, unsafe_allow_html=True)
-				# image_url = get_uploaded_image_url(uploaded_file)
 
 				# possibly uploading to s3?
 				# st.markdown(f'<iframe src="https://drive.google.com/viewerng/viewer?embedded=true&url={image_url}" width="100%" height="1100">', unsafe_allow_html=True)
