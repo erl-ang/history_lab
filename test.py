@@ -57,8 +57,8 @@ def main():
 
 				# cols[0].image(pdf_image[page_idx])
 				# cols[0].markdown(page)
-				st.markdown(display_pdf(uploaded_file), unsafe_allow_html=True)
-				image_url = get_uploaded_image_url(uploaded_file)
+				cols[0].markdown(display_pdf(uploaded_file), unsafe_allow_html=True)
+				# image_url = get_uploaded_image_url(uploaded_file)
 				# st.markdown(f'<iframe src="https://drive.google.com/viewerng/viewer?embedded=true&url={image_url}" width="100%" height="1100">', unsafe_allow_html=True)
 
 			# attempt to extract text
