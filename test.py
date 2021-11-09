@@ -33,7 +33,7 @@ def main():
 	# Choose your own image
 	uploaded_file = st.sidebar.file_uploader("Upload files", type=['pdf'])
 
-	# Model selection
+	# Model selection -- setting up UI for future use
 	st.sidebar.title("Model selection")
 	det_arch = st.sidebar.selectbox("Text Extraction Model", DET_ARCHS)
 	reco_arch = st.sidebar.selectbox("Redaction Model", RECO_ARCHS)
@@ -49,16 +49,34 @@ def main():
 			page = pdf_reader.getPage(page_idx)
 
 			with st.container():
-				# having trouble with converting from bytes
+				"""
+				trying to use pdf2image to display an uploaded pdf as an image instead
+				"""
 				# pdf_image = convert_from_bytes(uploaded_file.read())
+				"""
+				trying to use pdf2image to display a local pdf as an image
+				"""
 				# pdf_image = convert_from_path("~/Downloads/Liang_Erin_Resume.pdf")
-				# pdf_image = DocumentFile.from_pdf(uploaded_file.read()).as_images()
-				# read_pdf(file, **kwargs)
 
+				"""
+				maybe use Doctr library?
+				"""
+				# pdf_image = DocumentFile.from_pdf(uploaded_file.read()).as_images()
+
+				# display as an image
 				# cols[0].image(pdf_image[page_idx])
-				# cols[0].markdown(page)
-				cols[0].markdown(display_pdf(uploaded_file), unsafe_allow_html=True)
+
+				"""
+				Displaying markdown instead
+				"""
+				# pdf_html = get_pdf_html_embed(uploaded_file)
+				pdf_html =  get_pdf_html_iframe(uploaded_file)
+
+				
+				cols[0].markdown(pdf_html, unsafe_allow_html=True)
 				# image_url = get_uploaded_image_url(uploaded_file)
+
+				# possibly uploading to s3?
 				# st.markdown(f'<iframe src="https://drive.google.com/viewerng/viewer?embedded=true&url={image_url}" width="100%" height="1100">', unsafe_allow_html=True)
 
 			# attempt to extract text
@@ -76,16 +94,16 @@ def main():
 	# For newline
 	st.sidebar.write('\n')
 
-def display_pdf(file):
+def get_pdf_html_embed(file):
 	base64_pdf = base64.b64encode(file.read()).decode('utf-8')
-	pdf_display = f'<embed src="data:application/pdf;base64,{base64_pdf}" width="700" height="1100" type="application/pdf">' 
-	# parameterize 
-	return pdf_display
+	pdf_html_embed = f'<embed src="data:application/pdf;base64,{base64_pdf}" width="700" height="1100" type="application/pdf">' 
+	# parameterize dimensions later
+	return pdf_html_embed
 
-def get_uploaded_image_embed(file):
+def get_pdf_html_iframe(file):
 	base64_pdf = base64.b64encode(file.read()).decode('utf-8')
-	image_embed = f'<embed src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf">'
-	return image_embed
+	pdf_html_iframe = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="400" height="1000" type="application/pdf"></iframe>'
+	return pdf_html_iframe
 
 if __name__ == '__main__':
     main()
