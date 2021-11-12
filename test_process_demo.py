@@ -49,11 +49,13 @@ def main():
 			# Displaying markdown instead
 			pdf_html = get_pdf_html_iframe(uploaded_file)
 				
-			st.markdown(pdf_html, unsafe_allow_html=True)
+			st.write(pdf_html, unsafe_allow_html=True)
+			st.markdown("---")
 
 		# attempt to extract text
 		with st.container():
 			st.subheader("Text Extracted")
+			st.markdown("---")
 
 			ppdf_reader = ppdf.PdfFileReader(uploaded_file)
 			page_idx = st.sidebar.selectbox("Page selection", [idx + 1 for idx in range(ppdf_reader.numPages)]) - 1
@@ -66,6 +68,7 @@ def main():
 		# analyze the text
 		with st.container():
 			st.subheader("Show Named Entities")
+			st.markdown("---")
 
 			# tokenize text
 			doc = get_spacy_en_doc(page_text)
