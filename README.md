@@ -11,9 +11,10 @@ exploring potential dashboarding and data exploration tools for http://history-l
 `git clone git@github.com:erl-ang/history_lab.git`
 
 ### Install Streamlit and dependencies
+#### Installing Streamlit, Managing Python Environments.
 Follow [these instructions to install Streamlit](https://docs.streamlit.io/library/get-started/installation)
 
-I recommend letting [Anaconda](https://www.anaconda.com/products/individual) manage your dependencies
+Managing different versions of python is a pain. I recommend letting [Anaconda](https://www.anaconda.com/products/individual) manage your dependencies
 
 #### Installing Dependencies via `conda`:
 `conda install -c conda-forge pypdf2`
