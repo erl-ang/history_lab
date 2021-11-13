@@ -19,6 +19,7 @@ I recommend letting [Anaconda](https://www.anaconda.com/products/individual) man
 `conda install -c conda-forge pypdf2`
 
 `conda install -c conda-forge spacy`
+
 `python -m spacy download en_core_web_sm`
 
 ## 2. ORRRRR just visit a url on the deployed app :)
