@@ -53,37 +53,63 @@ def main():
 			st.markdown("---")
 
 		# attempt to extract text
-		with st.container():
-			st.subheader("Text Extracted")
-			st.markdown("---")
+		st.subheader("Text Extracted")
+		test_extracted_expander = st.expander("Text from PDF", expanded=True)
+		with test_extracted_expander:
 
 			ppdf_reader = ppdf.PdfFileReader(uploaded_file)
 			page_idx = st.sidebar.selectbox("Page selection", [idx + 1 for idx in range(ppdf_reader.numPages)]) - 1
-			ppdf_page = ppdf_reader.getPage(page_idx)
-			page_text = ppdf_page.extractText()
-
+			# ppdf_page = ppdf_reader.getPage(page_idx)
+			page_text = ppdf_extract(page_idx, ppdf_reader)
+			# st.write(page_text, unsafe_allow_html=True)
 			st.write(f'{get_html(page_text)}',  unsafe_allow_html=True)
 			# st.write(page_text)
 			
 		# analyze the text
+		st.markdown("---")
+		st.subheader("Show Named Entities")
+		ner_expander = st.expander("spaCy NER Results", expanded=True)
 		with st.container():
-			st.subheader("Show Named Entities")
-			st.markdown("---")
-
+			
 			# tokenize text
 			doc = get_spacy_en_doc(page_text)
 			nlp_result = entity_analyzer(doc)
 			st.json(nlp_result)
-			
+		
+		with ner_expander:
 			# use displacy to visualize NER results
 			# style = "<style>mark.entity { display: inline-block }</style>"
 			html = displacy.render(doc, style="ent")
 			st.write(f'{get_html(html)}',  unsafe_allow_html=True)
-			st.dataframe(get_entity_df(doc))
+		
+		with st.container():
+			entity_df = get_entity_df(doc)
+			st.dataframe(entity_df)
+
+		st.write('\n')
+		st.download_button("Download NER Results", entity_df.to_csv())
 			
 
 	# For newline
 	st.sidebar.write('\n')
+
+def ppdf_extract(page, ppdf_reader):
+	"""
+	wrapper for pypdf2's extract text method
+
+	refactor later
+	"""
+	text = []
+	cleanText = ""
+
+	pageObj = ppdf_reader.getPage(page)
+	text += pageObj.extractText()
+
+	for myWord in text:
+		if myWord != '\n':
+			cleanText += myWord
+	text = cleanText.split()
+	return str(text)
 
 def get_html(html: str):
     """Convert HTML so it can be rendered."""
