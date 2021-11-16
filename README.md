@@ -1,4 +1,4 @@
-# history_lab
+# history_lab [in prog]
 
 exploring potential dashboarding and data exploration tools for http://history-lab.org/ !
 
